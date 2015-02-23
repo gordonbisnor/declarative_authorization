@@ -296,8 +296,10 @@ module Authorization
           :context => nil,
           :attribute_check => false,
           :model => nil,
-          :load_method => nil
+          :load_method => nil,
+          :except => nil
         }.merge!(options)
+
         privilege = options[:require]
         context = options[:context]
         actions = args.flatten
@@ -654,7 +656,6 @@ module Authorization
                 "#{load_object_model} from params[:id] " +
                 "(#{contr.params[:id].inspect}), because attribute_check is enabled " +
                 "and #{instance_var.to_s} isn't set, but failed: #{e.class.name}: #{e}")
-            raise if AuthorizationInController.failed_auto_loading_is_not_found?
           end
           contr.instance_variable_set(instance_var, object)
         end
